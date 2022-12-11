@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+
+name: Book
+
+jobs:
+  publish_book:
+    name: Build Book
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      # Build and publish book
+      - name: Install `mdbook`
+        uses: peaceiris/actions-mdbook@v1
+        with:
+          mdbook-version: latest
+
+      - run: mdbook build
+
+      - name: Publish to `gh-pages`
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
+          force_orphan: true
