@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Command Line"
+
+[output.html]
+git-repository-url = "https://github.com/azriel91/command_line"
+edit-url-template = "https://github.com/azriel91/command_line/edit/main/{path}"
